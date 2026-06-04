@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: EC2 creada desde GitHub Actions
+Description: EC2 creada desde GitHub Actions por Dairo
 
 Parameters:
   InstanceDescription:
@@ -21,7 +21,6 @@ Resources:
   MyInstanceClase:
     Type: AWS::EC2::Instance
     Properties:
-      AvailabilityZone: us-east-1a
       ImageId: !Ref LatestAmiId
       InstanceType: t2.micro
       SecurityGroups:
@@ -38,9 +37,9 @@ Resources:
           yum install -y httpd
           systemctl start httpd
           systemctl enable httpd
-          echo "<html><body>
+          echo "<html><head><meta charset='utf-8'></head><body>
           <h1>${InstanceDescription} 👏</h1>
-          <h2>Hola desde CloudFormation con GitHub 🚀</h2>
+          <h2>Despliegue exitoso desde pipeline: deploy.yaml 🚀</h2>
           </body></html>" > /var/www/html/index.html
 
   ServerSecurityGroupClase:
