@@ -1,4 +1,4 @@
-name: deployd  # <- CAMBIADO AQUÍ PARA LA INTERFAZ DE GITHUB
+name: deployd
 
 on:
   workflow_dispatch:

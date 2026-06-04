@@ -39,7 +39,7 @@ Resources:
           systemctl enable httpd
           echo "<html><head><meta charset='utf-8'></head><body>
           <h1>${InstanceDescription} 👏</h1>
-          <h2>Despliegue exitoso desde pipeline: deploy.yaml 🚀</h2>
+          <h2>Hola desde tu servidor automatizado 🚀</h2>
           </body></html>" > /var/www/html/index.html
 
   ServerSecurityGroupClase:
