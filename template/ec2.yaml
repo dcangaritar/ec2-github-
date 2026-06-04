@@ -12,13 +12,17 @@ Parameters:
     Type: String
     Default: Acceso HTTP al servidor
 
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
+
 Resources:
 
   MyInstanceClase:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone: us-east-1a
-      ImageId: ami-0236922087fa98b6e
+      ImageId: !Ref LatestAmiId  # <- Usa la AMI dinámica que no falla
       InstanceType: t2.micro
       SecurityGroups:
         - !Ref ServerSecurityGroupClase
@@ -54,4 +58,4 @@ Resources:
 
 Outputs:
   InstanceId:
-    Value: !Ref MyInstanceClase 
+    Value: !Ref MyInstanceClase
