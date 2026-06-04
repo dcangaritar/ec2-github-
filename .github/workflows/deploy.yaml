@@ -1,4 +1,4 @@
-name: AWS CloudFormation CD
+name: deployd  # <- CAMBIADO AQUÍ PARA LA INTERFAZ DE GITHUB
 
 on:
   workflow_dispatch:
