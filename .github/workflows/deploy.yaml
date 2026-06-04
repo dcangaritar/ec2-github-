@@ -1,25 +1,16 @@
-name: deployd
+name: Deploy EC2
 
 on:
   workflow_dispatch:
-    inputs:
-      action:
-        description: 'Selecciona la acción a realizar'
-        required: true
-        default: 'deploy'
-        type: choice
-        options:
-          - deploy
-          - destroy
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  cloudformation:
+
+  deploy:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -30,21 +21,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      # EJECUTAR DESPLIEGUE
       - name: Deploy CloudFormation Stack
-        if: ${{ github.event.inputs.action == 'deploy' }}
         run: |
           aws cloudformation deploy \
-            --template-file template/ec2.yaml \
-            --stack-name ec2-stack-clase \
-            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
-
-      # EJECUTAR DESTRUCCIÓN
-      - name: Destroy CloudFormation Stack
-        if: ${{ github.event.inputs.action == 'destroy' }}
-        run: |
-          echo "Iniciando la eliminación del Stack..."
-          aws cloudformation delete-stack --stack-name ec2-stack-clase
-          echo "Esperando a que el Stack sea eliminado por completo..."
-          aws cloudformation wait stack-delete-complete --stack-name ec2-stack-clase
-          echo "Stack eliminado con éxito."
+          --template-file template/ec2.yaml \
+          --stack-name ec2-stack-clase

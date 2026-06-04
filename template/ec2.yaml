@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: EC2 creada desde GitHub Actions por Dairo
+Description: EC2 creada desde GitHub Actions
 
 Parameters:
   InstanceDescription:
@@ -12,16 +12,13 @@ Parameters:
     Type: String
     Default: Acceso HTTP al servidor
 
-  LatestAmiId:
-    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
-
 Resources:
 
   MyInstanceClase:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: !Ref LatestAmiId
+      AvailabilityZone: us-east-1a
+      ImageId: ami-0236922087fa98b6e
       InstanceType: t2.micro
       SecurityGroups:
         - !Ref ServerSecurityGroupClase
@@ -37,9 +34,9 @@ Resources:
           yum install -y httpd
           systemctl start httpd
           systemctl enable httpd
-          echo "<html><head><meta charset='utf-8'></head><body>
+          echo "<html><body>
           <h1>${InstanceDescription} 👏</h1>
-          <h2>Hola desde tu servidor automatizado 🚀</h2>
+          <h2>Hola desde CloudFormation con GitHub 🚀</h2>
           </body></html>" > /var/www/html/index.html
 
   ServerSecurityGroupClase:
@@ -56,5 +53,6 @@ Resources:
           CidrIp: 0.0.0.0/0
 
 Outputs:
+
   InstanceId:
-    Value: !Ref MyInstanceClase
+    Value: !Ref MyEC2New
